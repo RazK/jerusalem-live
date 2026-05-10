@@ -1,0 +1,62 @@
+version: "3.9"
+
+# Jerusalem.live — local development stack
+#
+# Prerequisites:
+#   1. supabase start        (local Postgres + Auth + Storage)
+#   2. cp api/.env.example api/.env && fill in values
+#   3. cp baileys/.env.example baileys/.env && fill in values
+#   4. docker compose up
+#
+# Frontend runs separately: cd frontend && npm run dev
+
+services:
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/app
+    env_file:
+      - ./api/.env
+    environment:
+      - BAILEYS_SERVICE_URL=http://baileys:3001
+      - ENVIRONMENT=development
+    depends_on:
+      baileys:
+        condition: service_healthy
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  baileys:
+    build:
+      context: ./baileys
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./baileys:/app
+      - baileys-session:/data/baileys-session
+    env_file:
+      - ./baileys/.env
+    environment:
+      - API_WEBHOOK_URL=http://api:8000/v1/webhook/whatsapp
+      - SESSION_PATH=/data/baileys-session
+      - PORT=3001
+    command: node --watch src/index.js
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  baileys-session:
+    driver: local

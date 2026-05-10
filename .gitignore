@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.env
+
+# Build output
+dist/
+build/
+.next/
+out/
+
+# Environment files (never commit secrets)
+.env
+.env.local
+.env.production
+.env.*.local
+api/.env
+baileys/.env
+frontend/.env
+
+# Supabase local
+supabase/.branches
+supabase/.temp
+
+# Baileys WhatsApp session (contains auth credentials)
+baileys-session/
+**/baileys-session/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# TypeScript
+*.tsbuildinfo
