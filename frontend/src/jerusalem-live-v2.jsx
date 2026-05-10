@@ -450,6 +450,7 @@ export default function App() {
                 overflowX:"auto",
                 scrollbarWidth:"none",
                 pointerEvents:"auto",
+                direction:"ltr",
               }}>
                 {Object.entries(CATEGORIES).map(([key,cat])=>{
                   const on=activeFilters.has(key);
@@ -577,7 +578,7 @@ export default function App() {
         {showTL && (
           <div style={{
             ...(showMap
-              ? { flexShrink:0, height: laneCount*LANE_H + TICK_H + 26 + 6 + 20 }
+              ? { flexShrink:0, height:240 }
               : { flex:1, minHeight:0 }
             ),
             background:MAP_NAVY,
@@ -691,7 +692,7 @@ export default function App() {
               })}
             </div>
 
-            <div style={{flex:1,minHeight:0,overflow:showMap?"hidden":"auto"}}>
+            <div style={{flex:1,minHeight:0,overflow:"hidden"}}>
               <div
                 ref={tlRef}
                 onPointerMove={onTLMove}
