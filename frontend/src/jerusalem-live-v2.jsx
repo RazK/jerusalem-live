@@ -280,22 +280,8 @@ export default function App() {
   });
 
   return (
-    <div style={{width:"100%",height:"100vh",background:"#0e0e18",display:"flex",justifyContent:"center",alignItems:"center",fontFamily:"'DM Sans',sans-serif"}}>
+    <div style={{width:"100%",height:"100dvh",background:MAP_NAVY,display:"flex",flexDirection:"column",fontFamily:"'DM Sans',sans-serif",overflow:"hidden",position:"relative"}}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-
-      <div style={{
-        width:390, height:"min(844px,calc(100vh - 8px))",
-        background:MAP_NAVY, borderRadius:44, overflow:"hidden",
-        position:"relative",
-        boxShadow:"0 40px 120px rgba(0,0,0,0.85),inset 0 0 0 1px rgba(255,255,255,0.07)",
-        display:"flex", flexDirection:"column",
-      }}>
-
-        {/* Status bar */}
-        <div style={{height:44,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 24px",flexShrink:0,zIndex:10}}>
-          <span style={{color:"#fff",fontSize:13,fontWeight:600}}>21:00</span>
-          <span style={{color:"#fff",fontSize:12,opacity:0.7}}>📶 100%</span>
-        </div>
 
         {/* ── MAP ── */}
         {showMap && (
@@ -457,40 +443,37 @@ export default function App() {
 
               {/* ── FLOATING CATEGORY CHIPS ON MAP — Google Maps style ── */}
               <div style={{
-                position:"absolute",bottom: showTL ? 14 : 20, left:0, right:0,
+                position:"absolute",top:50, left:0, right:0,
                 display:"flex",gap:8,
-                padding:"0 14px",
+                padding:"4px 14px",
                 zIndex:40,
                 overflowX:"auto",
                 scrollbarWidth:"none",
                 pointerEvents:"auto",
+                direction:"ltr",
               }}>
                 {Object.entries(CATEGORIES).map(([key,cat])=>{
                   const on=activeFilters.has(key);
                   return (
                     <button key={key} onClick={()=>toggleFilter(key)} style={{
                       flexShrink:0,
-                      display:"flex",alignItems:"center",gap:5,
-                      padding:"7px 13px 7px 9px",
+                      display:"flex",alignItems:"center",gap:6,
+                      padding:"6px 14px 6px 10px",
                       borderRadius:20,
-                      border:"none",
-                      background: on ? "#fff" : "rgba(26,28,46,0.92)",
-                      color: on ? "#202124" : "rgba(255,255,255,0.75)",
-                      fontSize:12,fontWeight:600,cursor:"pointer",
+                      border: on ? `2px solid ${cat.color}` : "2px solid transparent",
+                      background: on ? "#fff" : "rgba(32,33,36,0.88)",
+                      color: on ? "#202124" : "rgba(232,234,237,0.9)",
+                      fontSize:13,fontWeight:500,cursor:"pointer",
                       fontFamily:"'DM Sans',sans-serif",
-                      boxShadow: on
-                        ? `0 2px 10px rgba(0,0,0,0.35),0 0 0 2px ${cat.color}`
-                        : "0 2px 8px rgba(0,0,0,0.45),inset 0 0 0 1px rgba(255,255,255,0.08)",
-                      transition:"all 0.18s ease",
-                      backdropFilter:"blur(8px)",
+                      boxShadow:"0 1px 4px rgba(0,0,0,0.5),0 1px 2px rgba(0,0,0,0.3)",
+                      transition:"all 0.2s ease",
+                      backdropFilter:"blur(12px)",
                       whiteSpace:"nowrap",
                     }}>
-                      {/* Color dot — Google Maps style indicator */}
                       <div style={{
                         width:8,height:8,borderRadius:"50%",
                         background:cat.color,
                         flexShrink:0,
-                        boxShadow: on ? `0 0 0 2px ${cat.color}44` : "none",
                       }}/>
                       {cat.label}
                     </button>
@@ -498,14 +481,14 @@ export default function App() {
                 })}
               </div>
 
-              {/* Google Maps style zoom controls */}
+              {/* Zoom controls */}
               <div style={{
-                position:"absolute",right:12,top:12,
-                background:"rgba(26,28,46,0.92)",
-                borderRadius:8,
+                position:"absolute",right:12,top:52,
+                background:"rgba(32,33,36,0.9)",
+                borderRadius:12,
                 overflow:"hidden",
-                boxShadow:"0 2px 10px rgba(0,0,0,0.5),inset 0 0 0 1px rgba(255,255,255,0.08)",
-                backdropFilter:"blur(8px)",
+                boxShadow:"0 1px 8px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.06)",
+                backdropFilter:"blur(16px)",
                 zIndex:30,
               }}>
                 {[
@@ -525,38 +508,21 @@ export default function App() {
                 ))}
               </div>
 
-              {/* Header overlay — floating on map */}
+              {/* Header overlay — Google Maps floating style */}
               <div style={{
                 position:"absolute",top:0,left:0,right:0,
                 display:"flex",alignItems:"center",justifyContent:"space-between",
-                padding:"6px 14px",
+                padding:"8px 12px",
                 zIndex:35,
                 pointerEvents:"none",
               }}>
-                {/* Jerusalem logo */}
+                {/* Layout toggle — left side, minimal icon buttons */}
                 <div style={{
-                  background:"rgba(26,28,46,0.88)",
-                  backdropFilter:"blur(12px)",
-                  borderRadius:12,
-                  padding:"6px 12px",
-                  boxShadow:"0 2px 12px rgba(0,0,0,0.5),inset 0 0 0 1px rgba(255,255,255,0.1)",
-                  pointerEvents:"auto",
-                }}>
-                  <div style={{color:"#fff",fontSize:15,fontWeight:700,letterSpacing:-0.3,lineHeight:1}}>
-                    ירושלים <span style={{color:"#FF3366",fontSize:12}}>•</span>
-                  </div>
-                  <div style={{color:"rgba(255,255,255,0.4)",fontSize:9,marginTop:1,letterSpacing:0.3}}>
-                    {tlEvents.filter(isActive).length} events now
-                  </div>
-                </div>
-
-                {/* Layout toggle */}
-                <div style={{
-                  display:"flex",gap:2,
-                  background:"rgba(26,28,46,0.88)",
-                  backdropFilter:"blur(12px)",
-                  borderRadius:10,padding:3,
-                  boxShadow:"0 2px 12px rgba(0,0,0,0.5),inset 0 0 0 1px rgba(255,255,255,0.1)",
+                  display:"flex",gap:1,
+                  background:"rgba(32,33,36,0.9)",
+                  backdropFilter:"blur(16px)",
+                  borderRadius:24,padding:"3px 4px",
+                  boxShadow:"0 1px 8px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.06)",
                   pointerEvents:"auto",
                 }}>
                   {[
@@ -565,13 +531,34 @@ export default function App() {
                     {k:"timeline", icon:"⏱️", title:"Timeline only"},
                   ].map(({k,icon,title})=>(
                     <button key={k} title={title} onClick={()=>setLayout(k)} style={{
-                      width:32,height:26,borderRadius:7,border:"none",cursor:"pointer",
-                      background:layout===k?"rgba(255,255,255,0.2)":"transparent",
-                      color:layout===k?"#fff":"rgba(255,255,255,0.4)",
-                      fontSize:14,fontFamily:"'DM Sans',sans-serif",
+                      width:34,height:28,borderRadius:20,border:"none",cursor:"pointer",
+                      background:layout===k?"rgba(255,255,255,0.15)":"transparent",
+                      color:layout===k?"#e8eaed":"rgba(255,255,255,0.4)",
+                      fontSize:15,fontFamily:"'DM Sans',sans-serif",
                       transition:"all 0.15s",
                     }}>{icon}</button>
                   ))}
+                </div>
+
+                {/* Jerusalem logo — right side, Google Maps brand pill */}
+                <div style={{
+                  background:"rgba(32,33,36,0.9)",
+                  backdropFilter:"blur(16px)",
+                  borderRadius:24,
+                  padding:"7px 14px",
+                  boxShadow:"0 1px 8px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.06)",
+                  pointerEvents:"auto",
+                  display:"flex",alignItems:"center",gap:8,
+                  direction:"rtl",
+                }}>
+                  <div>
+                    <div style={{color:"#e8eaed",fontSize:14,fontWeight:600,letterSpacing:-0.2,lineHeight:1}}>
+                      ירושלים <span style={{color:"#FF3366",fontSize:11}}>●</span>
+                    </div>
+                    <div style={{color:"rgba(255,255,255,0.38)",fontSize:9,marginTop:2,letterSpacing:0.2}}>
+                      {tlEvents.filter(isActive).length} events now
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -591,11 +578,11 @@ export default function App() {
         {showTL && (
           <div style={{
             ...(showMap
-              ? { flexShrink:0, height: laneCount*LANE_H + TICK_H + 26 + 6 + 20 }
+              ? { flexShrink:0, height:240 }
               : { flex:1, minHeight:0 }
             ),
-            background:MAP_NAVY,
-            borderTop: showMap?"1px solid rgba(255,255,255,0.05)":"none",
+            background:"#1f1f21",
+            borderTop: showMap?"1px solid rgba(255,255,255,0.08)":"none",
             display:"flex", flexDirection:"column",
             paddingTop:4,
           }}>
@@ -623,20 +610,16 @@ export default function App() {
               </div>
             )}
 
-            {/* ── Day picker (Google Calendar–style week strip) ── */}
+            {/* ── Day picker — Google Calendar week strip ── */}
             <div style={{
               flexShrink:0,
               display:"flex",
-              overflowX:"auto",
-              scrollbarWidth:"none",
-              borderBottom:"1px solid rgba(255,255,255,0.06)",
-              paddingBottom:0,
+              borderBottom:"1px solid rgba(255,255,255,0.07)",
               direction:"ltr",
             }}>
               {DAYS.map(({day,name,date})=>{
                 const sel = day === selectedDay;
                 const count = EVENTS.filter(e=>e.day===day).length;
-                const hasDot = count > 0;
                 return (
                   <button
                     key={day}
@@ -644,68 +627,55 @@ export default function App() {
                       setSelectedDay(day);
                       setSelectedEvent(null);
                       setSheetOpen(false);
-                      // reset range to show full day
                       setRangeStart(6);
                       setRangeEnd(30);
                     }}
                     style={{
                       flex:"1 0 0",
-                      minWidth:44,
-                      padding:"6px 4px 8px",
+                      minWidth:0,
+                      padding:"6px 2px 6px",
                       border:"none",
                       background:"transparent",
                       cursor:"pointer",
                       display:"flex",
                       flexDirection:"column",
                       alignItems:"center",
-                      gap:2,
-                      position:"relative",
-                      opacity: count===0 ? 0.3 : 1,
+                      gap:3,
+                      opacity: count===0 ? 0.35 : 1,
                     }}
                   >
-                    {/* Day name */}
+                    {/* Day name — Google Calendar style */}
                     <span style={{
                       fontSize:10,
-                      fontWeight:600,
-                      letterSpacing:0.3,
-                      color: sel ? "#fff" : "rgba(255,255,255,0.45)",
+                      fontWeight:500,
+                      color: sel ? "#aecbfa" : "rgba(255,255,255,0.5)",
                       fontFamily:"'DM Sans',sans-serif",
                       direction:"rtl",
+                      letterSpacing:0.2,
                     }}>{name}</span>
-                    {/* Date circle */}
+                    {/* Date circle — Google Calendar blue */}
                     <span style={{
-                      width:28, height:28,
+                      width:30, height:30,
                       borderRadius:"50%",
-                      background: sel ? "#4285F4" : "transparent",
+                      background: sel ? "#1a73e8" : "transparent",
                       display:"flex", alignItems:"center", justifyContent:"center",
-                      fontSize:13,
-                      fontWeight: sel ? 700 : 400,
-                      color: sel ? "#fff" : "rgba(255,255,255,0.6)",
+                      fontSize:14,
+                      fontWeight: sel ? 600 : 400,
+                      color: sel ? "#fff" : "rgba(255,255,255,0.7)",
                       fontFamily:"'DM Sans',sans-serif",
-                      transition:"background 0.15s",
+                      transition:"background 0.2s",
                     }}>{date.split("/")[0]}</span>
-                    {/* Event count dot */}
-                    {hasDot && (
-                      <span style={{
-                        width:4, height:4, borderRadius:"50%",
-                        background: sel ? "#4285F4" : "rgba(255,255,255,0.3)",
-                        transition:"background 0.15s",
-                      }}/>
-                    )}
-                    {/* Selected underline */}
-                    {sel && (
-                      <span style={{
-                        position:"absolute", bottom:0, left:"20%", right:"20%",
-                        height:2, borderRadius:2,
-                        background:"#4285F4",
-                      }}/>
-                    )}
+                    {/* Event dot */}
+                    <div style={{
+                      width:4, height:4, borderRadius:"50%",
+                      background: count>0 ? (sel?"#aecbfa":"rgba(255,255,255,0.35)") : "transparent",
+                    }}/>
                   </button>
                 );
               })}
             </div>
 
-            <div style={{flex:1,minHeight:0,overflow:showMap?"hidden":"auto"}}>
+            <div style={{flex:1,minHeight:0,overflow:"hidden"}}>
               <div
                 ref={tlRef}
                 onPointerMove={onTLMove}
@@ -724,7 +694,7 @@ export default function App() {
                   <div key={li} style={{
                     position:"absolute",left:0,right:0,
                     top:li*LANE_H,height:PILL_H,
-                    background:li%2===0?"rgba(255,255,255,0.018)":"transparent",
+                    background:"transparent",
                     borderRadius:4,pointerEvents:"none",
                   }}/>
                 ))}
@@ -749,11 +719,12 @@ export default function App() {
                   const sel=selectedEvent?.id===ev.id;
                   const hov=hoveredId===ev.id;
                   const cat=CATEGORIES[ev.cat];
-                  const pillOpacity=sel||hov?1:active?0.9:0.2;
-                  const pillGlow=sel?`0 0 0 1.5px white,0 0 12px ${cat.color}`
-                                :hov?`0 0 0 1.5px ${cat.color},0 0 10px ${cat.color}88`:"none";
+                  const pillBg = active||hov ? cat.color : `${cat.color}30`;
+                  const pillOpacity = sel||hov ? 1 : active ? 1 : 0.65;
+                  const pillShadow = sel ? `0 0 0 2px #fff,0 2px 8px ${cat.color}`
+                                   : hov ? `0 0 0 1px ${cat.color}` : "none";
                   const pillWidthPx=(w/100)*340;
-                  const showTitle=tlOnly&&PILL_H>=22&&pillWidthPx>55;
+                  const showTitle=PILL_H>=18&&pillWidthPx>60;
 
                   return (
                     <div key={ev.id}
@@ -762,24 +733,24 @@ export default function App() {
                         position:"absolute",
                         left:`${l}%`,width:`${w}%`,
                         top:lane*LANE_H,height:PILL_H,
-                        borderRadius:tlOnly?7:3,
-                        background:active||hov?cat.color:"rgba(255,255,255,0.09)",
+                        borderRadius:tlOnly?8:4,
+                        background:pillBg,
                         opacity:pillOpacity,
                         cursor:"pointer",
                         transition:"opacity 0.15s,box-shadow 0.15s,transform 0.12s",
-                        transform:hov?"scaleY(1.06)":"scaleY(1)",
-                        boxShadow:pillGlow,
+                        transform:hov?"scaleY(1.08)":"scaleY(1)",
+                        boxShadow:pillShadow,
                         display:"flex",alignItems:"center",
-                        paddingLeft:showTitle?7:3,
-                        overflow:"hidden", gap:4,
-                        filter:active||hov?"none":"grayscale(0.6)",
+                        paddingLeft:showTitle?6:2,
+                        overflow:"hidden", gap:3,
                       }}>
-                      <span style={{fontSize:tlOnly?12:7,lineHeight:1,flexShrink:0}}>{cat.icon}</span>
+                      <span style={{fontSize:tlOnly?11:8,lineHeight:1,flexShrink:0,opacity:active?1:0.75}}>{cat.icon}</span>
                       {showTitle&&(
                         <span style={{
-                          fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.95)",
+                          fontSize:10,fontWeight:600,
+                          color: active ? "rgba(255,255,255,0.95)" : cat.color,
                           whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",lineHeight:1.2,
-                        }}>{ev.name}</span>
+                        }}>{ev.en}</span>
                       )}
                     </div>
                   );
@@ -830,10 +801,10 @@ export default function App() {
                       transform:"translateX(-50%)",
                       display:"flex",flexDirection:"column",alignItems:"center",gap:2,
                     }}>
-                      <div style={{width:1,height:4,background:"rgba(255,255,255,0.15)"}}/>
+                      <div style={{width:1,height:4,background:"rgba(255,255,255,0.18)"}}/>
                       <span style={{
-                        color:h>=rangeStart&&h<=rangeEnd?"rgba(255,255,255,0.6)":"rgba(255,255,255,0.18)",
-                        fontSize:8,fontWeight:500,fontFamily:"'DM Mono',monospace",whiteSpace:"nowrap",
+                        color:"rgba(255,255,255,0.5)",
+                        fontSize:8,fontWeight:400,fontFamily:"'DM Mono',monospace",whiteSpace:"nowrap",
                       }}>{hourLabel(h)}</span>
                     </div>
                   ))}
@@ -984,7 +955,6 @@ export default function App() {
           }
           ::-webkit-scrollbar { display:none; }
         `}</style>
-      </div>
     </div>
   );
 }
