@@ -44,7 +44,7 @@ export interface TimeRangeHandleProps {
  * />
  */
 export function TimeRangeHandle({
-  type,
+  type: _type,
   positionPct,
   laneAreaHeight,
   onPointerDown,

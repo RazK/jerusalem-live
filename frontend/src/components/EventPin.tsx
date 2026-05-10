@@ -124,7 +124,7 @@ interface PinTooltipProps {
 /** Google Maps-style white callout tooltip above the pin */
 function PinTooltip({
   event,
-  category,
+  category: _category,
   formatHour,
   normStart,
   normEnd,

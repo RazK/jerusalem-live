@@ -15,8 +15,7 @@ import type {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const DAY_START = 6;
-const DAY_END = 30;
+
 const NOW_HOUR = 21; // In production, derive from new Date().getHours()
 const TICK_H = 24; // Height reserved for hour tick marks
 
