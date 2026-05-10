@@ -11,28 +11,46 @@ const CATEGORIES = {
   culture: { label: "Culture",     color: "#BF5AF2", icon: "🎨" },
 };
 
+// Real events — המדריך לירושלמי האלטרנטיבי, week of May 3–9 2026
 const EVENTS = [
-  { id:1,  name:"מסיבת גג — אברהם הוסטל",    en:"Rooftop Party @ Abraham",      cat:"party",   start:21, end:27, x:52,y:34, neighborhood:"Nahalat Shiva",  desc:"הבירות הכי זולות בעיר + DJ סט עד הבוקר" },
-  { id:2,  name:"קונצרט ג'אז — לה ואש",       en:"Jazz Night @ La Vache",        cat:"music",   start:20, end:23, x:47,y:55, neighborhood:"German Colony",  desc:"ערב ג'אז אינטימי עם קוורטט מקומי" },
-  { id:3,  name:"שוק הלילה — מחנה יהודה",     en:"Night Market @ Mahane Yehuda", cat:"market",  start:18, end:23, x:38,y:38, neighborhood:"Mahane Yehuda", desc:"אוכל רחוב, מוזיקה חיה ואמנים מקומיים" },
-  { id:4,  name:"מסיבת טכנו — טלפיות",        en:"Techno Night @ Talpiot",       cat:"party",   start:23, end:30, x:58,y:64, neighborhood:"Talpiot",       desc:"מחסן תעשייתי עם סאונד סיסטם מגה" },
-  { id:5,  name:"הצגה — תיאטרון ירושלים",      en:"Play @ Jerusalem Theatre",     cat:"culture", start:19, end:21, x:43,y:50, neighborhood:"Katamon",       desc:"פרמיירה של מחזה ישראלי חדש" },
-  { id:6,  name:"יוגה בפארק — עין כרם",        en:"Sunrise Yoga @ Ein Karem",     cat:"outdoor", start:6,  end:8,  x:22,y:55, neighborhood:"Ein Karem",     desc:"יוגה עם נוף לגבעות ירושלים" },
-  { id:7,  name:"אמנות חיה — מוסררה",          en:"Live Art @ Musrara",           cat:"culture", start:18, end:22, x:57,y:28, neighborhood:"Musrara",       desc:"אמנים צובעים בשידור חי בחצר" },
-  { id:8,  name:"אקוסטי — נחלאות",             en:"Acoustic Set @ Nachlaot",      cat:"music",   start:20, end:23, x:34,y:43, neighborhood:"Nachlaot",      desc:"ערב מוזיקה אינטימי בחצר פרטית" },
-  { id:9,  name:"פופ-אפ בר — נחלת שבעה",      en:"Pop-up Bar @ Nahalat Shiva",   cat:"party",   start:19, end:26, x:50,y:37, neighborhood:"Nahalat Shiva", desc:"קוקטיילים מיוחדים + וינייל סט" },
-  { id:10, name:"שוק אורגני — המושבה",         en:"Organic Market",               cat:"market",  start:9,  end:14, x:45,y:57, neighborhood:"German Colony", desc:"ירקות טריים, גבינות ולחמים" },
-  { id:11, name:"ראן קלאב — טלפיות",           en:"Run Club @ Talpiot",           cat:"outdoor", start:7,  end:9,  x:60,y:60, neighborhood:"Talpiot",       desc:"ריצת בוקר + קפה ביחד" },
-  { id:12, name:"סטנד-אפ — קלאב 52",           en:"Stand-up @ Club 52",           cat:"culture", start:21, end:23, x:40,y:32, neighborhood:"Mahane Yehuda", desc:"ערב קומדיה עם 4 קומיקאים" },
-  { id:13, name:"מסיבת חצר — נחלאות",          en:"Courtyard Party @ Nachlaot",   cat:"party",   start:20, end:25, x:33,y:41, neighborhood:"Nachlaot",      desc:"מסיבה אינטימית בחצר ירושלמית" },
-  { id:14, name:"סשן DJ — מוסררה",             en:"DJ Session @ Musrara",         cat:"music",   start:21, end:26, x:55,y:30, neighborhood:"Musrara",       desc:"סט אלקטרוני עם DJ מקומי" },
+  // Sunday 03/05
+  { id:1,  name:"מסע נשימה מעגלית",          en:"Circular Breathwork Journey",              cat:"outdoor", start:10, end:12, x:50,y:40, neighborhood:"City Center",      desc:"לנשום, לשחרר, להרגיש, להביע — עם אליסה קייגן" },
+  // Monday 04/05
+  { id:2,  name:"שני ללא תחתית 🍺",          en:"Bottomless Monday @ Shoshana Bar",         cat:"party",   start:20, end:26, x:50,y:37, neighborhood:"Nahalat Shiva",    desc:"משקאות ללא הגבלה. כל יום שני בשושנה בר" },
+  { id:3,  name:"הסטנדאפ האינטרגלקטי",       en:"Intergalactic Stand-Up — Free!",           cat:"culture", start:21, end:23, x:40,y:38, neighborhood:"Mahane Yehuda",    desc:"חוזרים בעונה חדשה — חינם! בר הסמטה" },
+  { id:4,  name:"משחקי קופסא בפאב",          en:"Board Games Night @ HaMifletzet",          cat:"culture", start:19, end:23, x:51,y:35, neighborhood:"City Center",      desc:"ערב משחקי קופסא בפאב המפלצת" },
+  { id:5,  name:"הילולה במגדל דוד ✨",        en:"Lag B'Omer Hilula @ Tower of David",       cat:"party",   start:21, end:26, x:54,y:41, neighborhood:"Old City",         desc:"חפלה מסורתית בל\"ג בעומר — תחריר" },
+  { id:6,  name:"יום הולדת 5 לבארמון 🎉",    en:"Barmon 5th Birthday + DJ Yotam Yariv",     cat:"party",   start:22, end:27, x:65,y:65, neighborhood:"Armon HaNatziv",   desc:"DJ יותם יברוב — בארמון, פאב קהילתי" },
+  { id:7,  name:"ירושלים צוחקת בבלייז",      en:"Jerusalem Laughs @ Blaze Bar",             cat:"culture", start:21, end:23, x:48,y:36, neighborhood:"City Center",      desc:"באים לצחוק, לשתות ולהנות :)" },
+  // Tuesday 05/05
+  { id:8,  name:"קריוקי שלישי בשושנה 🎤",    en:"Tuesday Karaoke @ Shoshana Bar",           cat:"music",   start:21, end:25, x:50,y:37, neighborhood:"Nahalat Shiva",    desc:"שרות, מזייפות, חוגגות — קריוקי שבועי" },
+  { id:9,  name:"רונית שחר — מופע אינטימי",  en:"Ronit Shachar — Intimate Concert",         cat:"music",   start:20, end:22, x:51,y:35, neighborhood:"City Center",      desc:"שירים מוכרים וחדשים — פאב המפלצת" },
+  { id:10, name:"ערב סטנדאפ בבסרביה",        en:"Stand-Up Night @ Bessarabia",              cat:"culture", start:21, end:23, x:41,y:37, neighborhood:"Mahane Yehuda",    desc:"ערב הסטנדאפ החמים" },
+  { id:11, name:"עוּד, קאנון ונשיפה — מזקקה", en:"Oud, Kanon & Winds @ Mazkeka",            cat:"music",   start:20, end:22, x:50,y:33, neighborhood:"Russian Compound", desc:"מסע מוזיקלי עכשווי — שורשים, קצב וחדשנות" },
+  // Wednesday 06/05
+  { id:12, name:"איך מספרים מלחמה?",         en:"How Do We Tell War? — Discussion Series",  cat:"culture", start:18, end:21, x:33,y:41, neighborhood:"Givat Ram",        desc:"שלושה מבטים — מוזיאון ארצות המקרא" },
+  { id:13, name:"ערב רווקים רווקות 30+",     en:"Singles Night 30+ @ Glen Bar",             cat:"party",   start:20, end:24, x:49,y:37, neighborhood:"City Center",      desc:"ערב מפגש לבני 30+ — גלן בר ויסקי" },
+  { id:14, name:"בוריס שולמן — גיטרה סולו",  en:"Boris Schulman — Solo Guitar Show",        cat:"music",   start:21, end:23, x:51,y:35, neighborhood:"City Center",      desc:"גיטריסט וירטואוז, זמר ויוצר — פאב המפלצת" },
+  // Thursday 07/05
+  { id:15, name:"סדנת סריגת פרחים",          en:"Flower Knitting Workshop @ Hansen House",  cat:"culture", start:17, end:20, x:46,y:50, neighborhood:"German Colony",    desc:"בהשראת ״רקמה של כאב וחוטים״ — בית הנסן" },
+  { id:16, name:"שירים להפסיק את האש",       en:"Songs to Stop the Fire — Poetry & Music",  cat:"culture", start:19, end:21, x:21,y:57, neighborhood:"Ein Karem",        desc:"צוף / זוהר / ענבל בהופעה והקראת שירה — בית הגת" },
+  { id:17, name:"MITCH EL — אלקטרו פופ",     en:"MITCH EL — Live Electro Pop",              cat:"music",   start:21, end:24, x:51,y:35, neighborhood:"City Center",      desc:"אלקטרו פופ חי, חושי ומסעיר — פאב המפלצת" },
+  { id:18, name:"הליכות ג'יין ירושלים 🚶",   en:"Jane's Walk Jerusalem Festival",           cat:"outdoor", start:9,  end:17, x:48,y:38, neighborhood:"City Center",      desc:"פסטיבל הליכות עירוניות מונחות ברחבי ירושלים (7–9 במאי)" },
+  { id:19, name:"יהוא ירון ולהקת-העל",       en:"Yahu Yaron Super Band — Rock",             cat:"music",   start:21, end:24, x:50,y:33, neighborhood:"Russian Compound", desc:"רוק עוצמתי, בלדות חודרות, מסע רגשי — מזקקה" },
+  // Saturday 09/05
+  { id:20, name:"סדנת עיסוי בטבע 🌿",        en:"Outdoor Massage Workshop @ Beit HaKerem",  cat:"outdoor", start:10, end:13, x:29,y:44, neighborhood:"Beit HaKerem",     desc:"הפחתת סטרס עם מיכאל רוסלר" },
+  { id:21, name:"גיבורות על הפלמ\"ח",        en:"Feminist Walking Tour — Palmach St.",      cat:"outdoor", start:10, end:12, x:43,y:50, neighborhood:"Katamon",          desc:"שיטוט ברחוב הכי פמיניסטי בעולם — שישי בעשר" },
+  { id:22, name:"תמר אפק והטריו החדש 🎸",    en:"Tamar Epek New Trio — Rock @ Mazkeka",    cat:"music",   start:21, end:24, x:50,y:33, neighborhood:"Russian Compound", desc:"רוקנרול מדויק, פרוע ומיוזע במזקקה!" },
 ];
 
 const NEIGHBORHOODS = [
-  { name:"Mahane Yehuda", x:35,y:36 },{ name:"Nachlaot", x:30,y:44 },
-  { name:"Nahalat Shiva", x:51,y:35 },{ name:"German Colony", x:44,y:55 },
-  { name:"Musrara", x:58,y:26 },{ name:"Talpiot", x:60,y:62 },
-  { name:"Ein Karem", x:20,y:54 },{ name:"Katamon", x:42,y:50 },
+  { name:"Mahane Yehuda",   x:35,y:36 }, { name:"Nachlaot",        x:30,y:44 },
+  { name:"Nahalat Shiva",   x:51,y:35 }, { name:"German Colony",   x:44,y:55 },
+  { name:"Musrara",         x:58,y:26 }, { name:"Talpiot",         x:60,y:62 },
+  { name:"Ein Karem",       x:20,y:54 }, { name:"Katamon",         x:42,y:50 },
+  { name:"Russian Compound",x:50,y:32 }, { name:"Givat Ram",       x:33,y:40 },
+  { name:"Old City",        x:56,y:42 }, { name:"Armon HaNatziv",  x:65,y:63 },
+  { name:"Beit HaKerem",    x:29,y:43 }, { name:"City Center",     x:50,y:37 },
 ];
 
 // Google Maps dark palette
