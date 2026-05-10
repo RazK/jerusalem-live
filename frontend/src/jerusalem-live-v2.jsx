@@ -11,36 +11,51 @@ const CATEGORIES = {
   culture: { label: "Culture",     color: "#BF5AF2", icon: "🎨" },
 };
 
+// Week of May 3–9 2026 (day = date number in May)
+const DAYS = [
+  { day:3, name:"ראשון", date:"3/5" },
+  { day:4, name:"שני",   date:"4/5" },
+  { day:5, name:"שלישי", date:"5/5" },
+  { day:6, name:"רביעי", date:"6/5" },
+  { day:7, name:"חמישי", date:"7/5" },
+  { day:8, name:"שישי",  date:"8/5" },
+  { day:9, name:"שבת",   date:"9/5" },
+];
+
 // Real events — המדריך לירושלמי האלטרנטיבי, week of May 3–9 2026
+// day = date number in May (3=Sun, 4=Mon … 9=Sat)
 const EVENTS = [
   // Sunday 03/05
-  { id:1,  name:"מסע נשימה מעגלית",          en:"Circular Breathwork Journey",              cat:"outdoor", start:10, end:12, x:50,y:40, neighborhood:"City Center",      desc:"לנשום, לשחרר, להרגיש, להביע — עם אליסה קייגן" },
+  { id:1,  day:3, name:"מסע נשימה מעגלית",          en:"Circular Breathwork Journey",              cat:"outdoor", start:10, end:12, x:50,y:40, neighborhood:"City Center",      desc:"לנשום, לשחרר, להרגיש, להביע — עם אליסה קייגן" },
   // Monday 04/05
-  { id:2,  name:"שני ללא תחתית 🍺",          en:"Bottomless Monday @ Shoshana Bar",         cat:"party",   start:20, end:26, x:50,y:37, neighborhood:"Nahalat Shiva",    desc:"משקאות ללא הגבלה. כל יום שני בשושנה בר" },
-  { id:3,  name:"הסטנדאפ האינטרגלקטי",       en:"Intergalactic Stand-Up — Free!",           cat:"culture", start:21, end:23, x:40,y:38, neighborhood:"Mahane Yehuda",    desc:"חוזרים בעונה חדשה — חינם! בר הסמטה" },
-  { id:4,  name:"משחקי קופסא בפאב",          en:"Board Games Night @ HaMifletzet",          cat:"culture", start:19, end:23, x:51,y:35, neighborhood:"City Center",      desc:"ערב משחקי קופסא בפאב המפלצת" },
-  { id:5,  name:"הילולה במגדל דוד ✨",        en:"Lag B'Omer Hilula @ Tower of David",       cat:"party",   start:21, end:26, x:54,y:41, neighborhood:"Old City",         desc:"חפלה מסורתית בל\"ג בעומר — תחריר" },
-  { id:6,  name:"יום הולדת 5 לבארמון 🎉",    en:"Barmon 5th Birthday + DJ Yotam Yariv",     cat:"party",   start:22, end:27, x:65,y:65, neighborhood:"Armon HaNatziv",   desc:"DJ יותם יברוב — בארמון, פאב קהילתי" },
-  { id:7,  name:"ירושלים צוחקת בבלייז",      en:"Jerusalem Laughs @ Blaze Bar",             cat:"culture", start:21, end:23, x:48,y:36, neighborhood:"City Center",      desc:"באים לצחוק, לשתות ולהנות :)" },
+  { id:2,  day:4, name:"שני ללא תחתית 🍺",          en:"Bottomless Monday @ Shoshana Bar",         cat:"party",   start:20, end:26, x:50,y:37, neighborhood:"Nahalat Shiva",    desc:"משקאות ללא הגבלה. כל יום שני בשושנה בר" },
+  { id:3,  day:4, name:"הסטנדאפ האינטרגלקטי",       en:"Intergalactic Stand-Up — Free!",           cat:"culture", start:21, end:23, x:40,y:38, neighborhood:"Mahane Yehuda",    desc:"חוזרים בעונה חדשה — חינם! בר הסמטה" },
+  { id:4,  day:4, name:"משחקי קופסא בפאב",          en:"Board Games Night @ HaMifletzet",          cat:"culture", start:19, end:23, x:51,y:35, neighborhood:"City Center",      desc:"ערב משחקי קופסא בפאב המפלצת" },
+  { id:5,  day:4, name:"הילולה במגדל דוד ✨",        en:"Lag B'Omer Hilula @ Tower of David",       cat:"party",   start:21, end:26, x:54,y:41, neighborhood:"Old City",         desc:"חפלה מסורתית בל\"ג בעומר — תחריר" },
+  { id:6,  day:4, name:"יום הולדת 5 לבארמון 🎉",    en:"Barmon 5th Birthday + DJ Yotam Yariv",     cat:"party",   start:22, end:27, x:65,y:65, neighborhood:"Armon HaNatziv",   desc:"DJ יותם יברוב — בארמון, פאב קהילתי" },
+  { id:7,  day:4, name:"ירושלים צוחקת בבלייז",      en:"Jerusalem Laughs @ Blaze Bar",             cat:"culture", start:21, end:23, x:48,y:36, neighborhood:"City Center",      desc:"באים לצחוק, לשתות ולהנות :)" },
   // Tuesday 05/05
-  { id:8,  name:"קריוקי שלישי בשושנה 🎤",    en:"Tuesday Karaoke @ Shoshana Bar",           cat:"music",   start:21, end:25, x:50,y:37, neighborhood:"Nahalat Shiva",    desc:"שרות, מזייפות, חוגגות — קריוקי שבועי" },
-  { id:9,  name:"רונית שחר — מופע אינטימי",  en:"Ronit Shachar — Intimate Concert",         cat:"music",   start:20, end:22, x:51,y:35, neighborhood:"City Center",      desc:"שירים מוכרים וחדשים — פאב המפלצת" },
-  { id:10, name:"ערב סטנדאפ בבסרביה",        en:"Stand-Up Night @ Bessarabia",              cat:"culture", start:21, end:23, x:41,y:37, neighborhood:"Mahane Yehuda",    desc:"ערב הסטנדאפ החמים" },
-  { id:11, name:"עוּד, קאנון ונשיפה — מזקקה", en:"Oud, Kanon & Winds @ Mazkeka",            cat:"music",   start:20, end:22, x:50,y:33, neighborhood:"Russian Compound", desc:"מסע מוזיקלי עכשווי — שורשים, קצב וחדשנות" },
+  { id:8,  day:5, name:"קריוקי שלישי בשושנה 🎤",    en:"Tuesday Karaoke @ Shoshana Bar",           cat:"music",   start:21, end:25, x:50,y:37, neighborhood:"Nahalat Shiva",    desc:"שרות, מזייפות, חוגגות — קריוקי שבועי" },
+  { id:9,  day:5, name:"רונית שחר — מופע אינטימי",  en:"Ronit Shachar — Intimate Concert",         cat:"music",   start:20, end:22, x:51,y:35, neighborhood:"City Center",      desc:"שירים מוכרים וחדשים — פאב המפלצת" },
+  { id:10, day:5, name:"ערב סטנדאפ בבסרביה",        en:"Stand-Up Night @ Bessarabia",              cat:"culture", start:21, end:23, x:41,y:37, neighborhood:"Mahane Yehuda",    desc:"ערב הסטנדאפ החמים" },
+  { id:11, day:5, name:"עוּד, קאנון ונשיפה — מזקקה", en:"Oud, Kanon & Winds @ Mazkeka",            cat:"music",   start:20, end:22, x:50,y:33, neighborhood:"Russian Compound", desc:"מסע מוזיקלי עכשווי — שורשים, קצב וחדשנות" },
   // Wednesday 06/05
-  { id:12, name:"איך מספרים מלחמה?",         en:"How Do We Tell War? — Discussion Series",  cat:"culture", start:18, end:21, x:33,y:41, neighborhood:"Givat Ram",        desc:"שלושה מבטים — מוזיאון ארצות המקרא" },
-  { id:13, name:"ערב רווקים רווקות 30+",     en:"Singles Night 30+ @ Glen Bar",             cat:"party",   start:20, end:24, x:49,y:37, neighborhood:"City Center",      desc:"ערב מפגש לבני 30+ — גלן בר ויסקי" },
-  { id:14, name:"בוריס שולמן — גיטרה סולו",  en:"Boris Schulman — Solo Guitar Show",        cat:"music",   start:21, end:23, x:51,y:35, neighborhood:"City Center",      desc:"גיטריסט וירטואוז, זמר ויוצר — פאב המפלצת" },
+  { id:12, day:6, name:"איך מספרים מלחמה?",         en:"How Do We Tell War? — Discussion Series",  cat:"culture", start:18, end:21, x:33,y:41, neighborhood:"Givat Ram",        desc:"שלושה מבטים — מוזיאון ארצות המקרא" },
+  { id:13, day:6, name:"ערב רווקים רווקות 30+",     en:"Singles Night 30+ @ Glen Bar",             cat:"party",   start:20, end:24, x:49,y:37, neighborhood:"City Center",      desc:"ערב מפגש לבני 30+ — גלן בר ויסקי" },
+  { id:14, day:6, name:"בוריס שולמן — גיטרה סולו",  en:"Boris Schulman — Solo Guitar Show",        cat:"music",   start:21, end:23, x:51,y:35, neighborhood:"City Center",      desc:"גיטריסט וירטואוז, זמר ויוצר — פאב המפלצת" },
   // Thursday 07/05
-  { id:15, name:"סדנת סריגת פרחים",          en:"Flower Knitting Workshop @ Hansen House",  cat:"culture", start:17, end:20, x:46,y:50, neighborhood:"German Colony",    desc:"בהשראת ״רקמה של כאב וחוטים״ — בית הנסן" },
-  { id:16, name:"שירים להפסיק את האש",       en:"Songs to Stop the Fire — Poetry & Music",  cat:"culture", start:19, end:21, x:21,y:57, neighborhood:"Ein Karem",        desc:"צוף / זוהר / ענבל בהופעה והקראת שירה — בית הגת" },
-  { id:17, name:"MITCH EL — אלקטרו פופ",     en:"MITCH EL — Live Electro Pop",              cat:"music",   start:21, end:24, x:51,y:35, neighborhood:"City Center",      desc:"אלקטרו פופ חי, חושי ומסעיר — פאב המפלצת" },
-  { id:18, name:"הליכות ג'יין ירושלים 🚶",   en:"Jane's Walk Jerusalem Festival",           cat:"outdoor", start:9,  end:17, x:48,y:38, neighborhood:"City Center",      desc:"פסטיבל הליכות עירוניות מונחות ברחבי ירושלים (7–9 במאי)" },
-  { id:19, name:"יהוא ירון ולהקת-העל",       en:"Yahu Yaron Super Band — Rock",             cat:"music",   start:21, end:24, x:50,y:33, neighborhood:"Russian Compound", desc:"רוק עוצמתי, בלדות חודרות, מסע רגשי — מזקקה" },
+  { id:15, day:7, name:"סדנת סריגת פרחים",          en:"Flower Knitting Workshop @ Hansen House",  cat:"culture", start:17, end:20, x:46,y:50, neighborhood:"German Colony",    desc:"בהשראת ״רקמה של כאב וחוטים״ — בית הנסן" },
+  { id:16, day:7, name:"שירים להפסיק את האש",       en:"Songs to Stop the Fire — Poetry & Music",  cat:"culture", start:19, end:21, x:21,y:57, neighborhood:"Ein Karem",        desc:"צוף / זוהר / ענבל בהופעה והקראת שירה — בית הגת" },
+  { id:17, day:7, name:"MITCH EL — אלקטרו פופ",     en:"MITCH EL — Live Electro Pop",              cat:"music",   start:21, end:24, x:51,y:35, neighborhood:"City Center",      desc:"אלקטרו פופ חי, חושי ומסעיר — פאב המפלצת" },
+  { id:18, day:7, name:"הליכות ג'יין ירושלים 🚶",   en:"Jane's Walk Jerusalem Festival",           cat:"outdoor", start:9,  end:17, x:48,y:38, neighborhood:"City Center",      desc:"פסטיבל הליכות עירוניות מונחות ברחבי ירושלים" },
+  { id:19, day:7, name:"יהוא ירון ולהקת-העל",       en:"Yahu Yaron Super Band — Rock",             cat:"music",   start:21, end:24, x:50,y:33, neighborhood:"Russian Compound", desc:"רוק עוצמתי, בלדות חודרות, מסע רגשי — מזקקה" },
+  // Friday 08/05
+  { id:23, day:8, name:"הליכות ג'יין ירושלים 🚶",   en:"Jane's Walk Jerusalem Festival",           cat:"outdoor", start:9,  end:17, x:48,y:38, neighborhood:"City Center",      desc:"פסטיבל הליכות עירוניות מונחות ברחבי ירושלים" },
   // Saturday 09/05
-  { id:20, name:"סדנת עיסוי בטבע 🌿",        en:"Outdoor Massage Workshop @ Beit HaKerem",  cat:"outdoor", start:10, end:13, x:29,y:44, neighborhood:"Beit HaKerem",     desc:"הפחתת סטרס עם מיכאל רוסלר" },
-  { id:21, name:"גיבורות על הפלמ\"ח",        en:"Feminist Walking Tour — Palmach St.",      cat:"outdoor", start:10, end:12, x:43,y:50, neighborhood:"Katamon",          desc:"שיטוט ברחוב הכי פמיניסטי בעולם — שישי בעשר" },
-  { id:22, name:"תמר אפק והטריו החדש 🎸",    en:"Tamar Epek New Trio — Rock @ Mazkeka",    cat:"music",   start:21, end:24, x:50,y:33, neighborhood:"Russian Compound", desc:"רוקנרול מדויק, פרוע ומיוזע במזקקה!" },
+  { id:20, day:9, name:"סדנת עיסוי בטבע 🌿",        en:"Outdoor Massage Workshop @ Beit HaKerem",  cat:"outdoor", start:10, end:13, x:29,y:44, neighborhood:"Beit HaKerem",     desc:"הפחתת סטרס עם מיכאל רוסלר" },
+  { id:21, day:9, name:"גיבורות על הפלמ\"ח",        en:"Feminist Walking Tour — Palmach St.",      cat:"outdoor", start:10, end:12, x:43,y:50, neighborhood:"Katamon",          desc:"שיטוט ברחוב הכי פמיניסטי בעולם — שישי בעשר" },
+  { id:22, day:9, name:"תמר אפק והטריו החדש 🎸",    en:"Tamar Epek New Trio — Rock @ Mazkeka",    cat:"music",   start:21, end:24, x:50,y:33, neighborhood:"Russian Compound", desc:"רוקנרול מדויק, פרוע ומיוזע במזקקה!" },
+  { id:24, day:9, name:"הליכות ג'יין ירושלים 🚶",   en:"Jane's Walk Jerusalem Festival",           cat:"outdoor", start:9,  end:17, x:48,y:38, neighborhood:"City Center",      desc:"פסטיבל הליכות עירוניות מונחות ברחבי ירושלים" },
 ];
 
 const NEIGHBORHOODS = [
@@ -162,8 +177,9 @@ function TearDropPin({ cat, active, selected, hovered, size = 36 }) {
 
 export default function App() {
   const [activeFilters, setActiveFilters] = useState(new Set(Object.keys(CATEGORIES)));
-  const [rangeStart, setRangeStart] = useState(18);
-  const [rangeEnd,   setRangeEnd]   = useState(26);
+  const [selectedDay, setSelectedDay]   = useState(4); // default Monday — most events
+  const [rangeStart, setRangeStart] = useState(6);
+  const [rangeEnd,   setRangeEnd]   = useState(30);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [sheetOpen, setSheetOpen]   = useState(false);
   const [layout, setLayout]         = useState("both");
@@ -192,7 +208,7 @@ export default function App() {
   });
 
   const mapBounds = useMemo(()=>getMapBounds(mapScale,mapOffset),[mapScale,mapOffset]);
-  const visibleEvents = EVENTS.filter(ev=>activeFilters.has(ev.cat));
+  const visibleEvents = EVENTS.filter(ev=>ev.day===selectedDay && activeFilters.has(ev.cat));
   const isActive  = ev => activeFilters.has(ev.cat) && eventInRange(ev,rangeStart,rangeEnd);
   const isInBounds= ev => isInMapBounds(ev,mapBounds);
   const tlEvents  = useMemo(()=>visibleEvents.filter(ev=>isInBounds(ev)),[visibleEvents,mapBounds]);
@@ -606,6 +622,88 @@ export default function App() {
                 </div>
               </div>
             )}
+
+            {/* ── Day picker (Google Calendar–style week strip) ── */}
+            <div style={{
+              flexShrink:0,
+              display:"flex",
+              overflowX:"auto",
+              scrollbarWidth:"none",
+              borderBottom:"1px solid rgba(255,255,255,0.06)",
+              paddingBottom:0,
+              direction:"ltr",
+            }}>
+              {DAYS.map(({day,name,date})=>{
+                const sel = day === selectedDay;
+                const count = EVENTS.filter(e=>e.day===day).length;
+                const hasDot = count > 0;
+                return (
+                  <button
+                    key={day}
+                    onClick={()=>{
+                      setSelectedDay(day);
+                      setSelectedEvent(null);
+                      setSheetOpen(false);
+                      // reset range to show full day
+                      setRangeStart(6);
+                      setRangeEnd(30);
+                    }}
+                    style={{
+                      flex:"1 0 0",
+                      minWidth:44,
+                      padding:"6px 4px 8px",
+                      border:"none",
+                      background:"transparent",
+                      cursor:"pointer",
+                      display:"flex",
+                      flexDirection:"column",
+                      alignItems:"center",
+                      gap:2,
+                      position:"relative",
+                      opacity: count===0 ? 0.3 : 1,
+                    }}
+                  >
+                    {/* Day name */}
+                    <span style={{
+                      fontSize:10,
+                      fontWeight:600,
+                      letterSpacing:0.3,
+                      color: sel ? "#fff" : "rgba(255,255,255,0.45)",
+                      fontFamily:"'DM Sans',sans-serif",
+                      direction:"rtl",
+                    }}>{name}</span>
+                    {/* Date circle */}
+                    <span style={{
+                      width:28, height:28,
+                      borderRadius:"50%",
+                      background: sel ? "#4285F4" : "transparent",
+                      display:"flex", alignItems:"center", justifyContent:"center",
+                      fontSize:13,
+                      fontWeight: sel ? 700 : 400,
+                      color: sel ? "#fff" : "rgba(255,255,255,0.6)",
+                      fontFamily:"'DM Sans',sans-serif",
+                      transition:"background 0.15s",
+                    }}>{date.split("/")[0]}</span>
+                    {/* Event count dot */}
+                    {hasDot && (
+                      <span style={{
+                        width:4, height:4, borderRadius:"50%",
+                        background: sel ? "#4285F4" : "rgba(255,255,255,0.3)",
+                        transition:"background 0.15s",
+                      }}/>
+                    )}
+                    {/* Selected underline */}
+                    {sel && (
+                      <span style={{
+                        position:"absolute", bottom:0, left:"20%", right:"20%",
+                        height:2, borderRadius:2,
+                        background:"#4285F4",
+                      }}/>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
 
             <div style={{flex:1,minHeight:0,overflow:showMap?"hidden":"auto"}}>
               <div
