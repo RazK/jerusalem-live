@@ -280,22 +280,8 @@ export default function App() {
   });
 
   return (
-    <div style={{width:"100%",height:"100vh",background:"#0e0e18",display:"flex",justifyContent:"center",alignItems:"center",fontFamily:"'DM Sans',sans-serif"}}>
+    <div style={{width:"100%",height:"100dvh",background:MAP_NAVY,display:"flex",flexDirection:"column",fontFamily:"'DM Sans',sans-serif",overflow:"hidden",position:"relative"}}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-
-      <div style={{
-        width:390, height:"min(844px,calc(100vh - 8px))",
-        background:MAP_NAVY, borderRadius:44, overflow:"hidden",
-        position:"relative",
-        boxShadow:"0 40px 120px rgba(0,0,0,0.85),inset 0 0 0 1px rgba(255,255,255,0.07)",
-        display:"flex", flexDirection:"column",
-      }}>
-
-        {/* Status bar */}
-        <div style={{height:44,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 24px",flexShrink:0,zIndex:10}}>
-          <span style={{color:"#fff",fontSize:13,fontWeight:600}}>21:00</span>
-          <span style={{color:"#fff",fontSize:12,opacity:0.7}}>📶 100%</span>
-        </div>
 
         {/* ── MAP ── */}
         {showMap && (
@@ -457,7 +443,7 @@ export default function App() {
 
               {/* ── FLOATING CATEGORY CHIPS ON MAP — Google Maps style ── */}
               <div style={{
-                position:"absolute",bottom: showTL ? 14 : 20, left:0, right:0,
+                position:"absolute",top:50, left:0, right:0,
                 display:"flex",gap:8,
                 padding:"0 14px",
                 zIndex:40,
@@ -984,7 +970,6 @@ export default function App() {
           }
           ::-webkit-scrollbar { display:none; }
         `}</style>
-      </div>
     </div>
   );
 }
